@@ -15,6 +15,7 @@
  */
 package org.springframework.batch.core.step.tasklet;
 
+import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.launch.JobOperator;
 
 /**
@@ -38,4 +39,15 @@ public interface StoppableTasklet extends Tasklet {
 	 */
 	void stop();
 
+	/**
+	 * Used to signal that the job should stop, providing access to the current
+	 * {@link StepExecution} context. This default implementation simply calls
+	 * {@link #stop()} without using the {@link StepExecution} parameter, but it can
+	 * be overridden to handle additional logic based on the step's execution context.
+	 *
+	 * @param stepExecution the current {@link StepExecution} context in which the job is being executed
+	 */
+	default void stop(StepExecution stepExecution) {
+		stop();
+	}
 }
